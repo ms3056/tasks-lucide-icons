@@ -1,9 +1,9 @@
 {
   "id": "tasks-lucide-icons",
   "name": "Tasks Lucide Icons",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "minAppVersion": "1.5.0",
   "description": "Replaces Tasks plugin emojis and custom regex patterns with native Lucide SVG icons and custom colors across Live Preview, Reading View, and sidebars.",
-  "author": "Mike Stamper",
+  "author": "HiroMike",
   "isDesktopOnly": false
 }
