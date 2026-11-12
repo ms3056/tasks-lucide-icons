@@ -1,0 +1,767 @@
+/* =========================================================
+   Tasks Lucide Icons v2.1 - Inline & Settings UI Styling
+   ========================================================= */
+
+/* Shared icon-size math. --tli-icon-scale is set per rule (custom rules
+   only); the widgets' toDOM() writes it as an inline custom property.
+   --tli-icon-size is hard-clamped, so a scale value outside the slider
+   bounds (e.g. hand-edited data.json) can never blow up layout. */
+.tasks-inline-lucide-icon,
+.tli-preview-badge {
+  --tli-icon-base: 14px;
+  --tli-icon-scale: 1;
+  --tli-icon-size: clamp(7px, calc(var(--tli-icon-base) * var(--tli-icon-scale)), 32px);
+  --tli-align-nudge: -0.0714286; /* -1px at 14px: keeps current look at scale 1 */
+}
+
+.tasks-inline-lucide-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  vertical-align: middle;
+  margin: 0 calc(3px * var(--tli-icon-scale));
+  line-height: 1;
+  width: var(--tli-icon-size);
+  height: var(--tli-icon-size);
+  /* Nudge scales with the rendered size so the icon stays optically
+     centered in the text line at every scale, not just at 14px. */
+  transform: translateY(calc(var(--tli-icon-size) * var(--tli-align-nudge)));
+}
+
+.tasks-inline-lucide-icon svg.svg-icon {
+  width: var(--tli-icon-size);
+  height: var(--tli-icon-size);
+  /* Fixed design-ratio weight: the icon scales but the lines stay slim
+     (2.2/24 of the icon at any size) — user-approved default. */
+  stroke-width: 2.2px;
+}
+
+.tasks-edit.tasks-lucide-action-replaced::after,
+.tasks-postpone.tasks-lucide-action-replaced::after {
+  content: none !important;
+}
+
+.tasks-lucide-action-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  /* width: 1em; */
+  /* height: 1em; */
+  width: 14px;
+  height: 14px;
+  stroke-width: 2.2px;
+  vertical-align: middle;
+  line-height: 1;
+}
+
+.tasks-lucide-action-icon svg.svg-icon {
+  width: 1em;
+  height: 1em;
+  margin-right: 0;
+  opacity: 1;
+  stroke-width: 2px;
+}
+
+/* --- Settings UI Layout --- */
+.tli-section-desc {
+  color: var(--text-muted);
+  font-size: 0.85em;
+  margin-bottom: 14px;
+}
+
+.tli-rule-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.tli-rule-card {
+  display: grid;
+  grid-template-columns: 36px minmax(105px, 1fr) minmax(95px, 1fr) minmax(90px, 0.9fr) auto auto;
+  grid-template-areas:
+    "badge pattern icon size color actions";
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  background-color: var(--background-secondary);
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 8px;
+  transition: border-color 0.15s ease, opacity 0.15s ease;
+}
+
+.tli-rule-card.is-disabled {
+  opacity: 0.55;
+}
+
+.tli-rule-card:hover {
+  border-color: var(--background-modifier-border-hover);
+}
+
+/* Live Preview Badge */
+.tli-preview-badge {
+  grid-area: badge;
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  background-color: var(--background-primary);
+  border: 1px solid var(--background-modifier-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.tli-preview-badge svg {
+  width: var(--tli-icon-size);
+  height: var(--tli-icon-size);
+  /* Same slim line weight as the inline icons so the preview matches. */
+  stroke-width: 2.2px;
+}
+
+/* Pattern / Label Column */
+.tli-pattern-col {
+  grid-area: pattern;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+
+.tli-core-title {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 600;
+  font-size: 0.92em;
+}
+
+.tli-core-emoji {
+  font-family: var(--font-monospace);
+  background: var(--background-primary);
+  padding: 1px 6px;
+  border-radius: 4px;
+  border: 1px solid var(--background-modifier-border);
+  font-size: 0.9em;
+}
+
+.tli-custom-inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.tli-custom-inputs input[type="text"] {
+  width: 100%;
+  height: 28px;
+  font-size: 0.8em;
+  padding: 2px 8px;
+}
+
+/* Mode Toggle (Icon vs CSS Class) */
+.tli-mode-switch {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  background: var(--background-primary);
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 6px;
+  padding: 2px;
+  gap: 2px;
+}
+
+.tli-mode-btn {
+  flex: 1;
+  appearance: none;
+  border: none !important;
+  box-shadow: none !important;
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 0.75em;
+  font-weight: 600;
+  height: 22px;
+  padding: 0 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  white-space: nowrap;
+  text-align: center;
+  transition: background-color 0.12s ease, color 0.12s ease;
+}
+
+.tli-mode-btn:hover {
+  color: var(--text-normal);
+}
+
+.tli-mode-btn.is-active {
+  background: var(--interactive-accent) !important;
+  color: var(--text-on-accent) !important;
+}
+
+.tli-regex-input {
+  font-family: var(--font-monospace);
+}
+
+.tli-regex-input.is-invalid {
+  border-color: var(--text-error) !important;
+  background-color: rgba(239, 68, 68, 0.08);
+}
+
+.tli-regex-error {
+  color: var(--text-error);
+  font-size: 0.75em;
+  display: none;
+}
+
+.tli-regex-Error-visible {
+  display: block;
+}
+
+/* CSS Class Wrapper Column (hidden in Icon mode, spans full middle-right in CSS mode) */
+.tli-rule-card.is-css-mode {
+  grid-template-columns: 36px minmax(110px, 0.62fr) minmax(240px, 1.95fr) auto;
+  grid-template-areas:
+    "badge pattern css actions";
+}
+
+.tli-css-col {
+  grid-area: css;
+  display: none;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-self: stretch;
+  padding-top: 2px;
+  gap: 6px;
+  min-width: 0;
+}
+
+.tli-rule-card.is-css-mode .tli-icon-col,
+.tli-rule-card.is-css-mode .tli-size-col,
+.tli-rule-card.is-css-mode .tli-color-col {
+  display: none !important;
+}
+
+.tli-rule-card.is-css-mode .tli-css-col {
+  display: flex;
+}
+
+.tli-css-class-input {
+  width: 100%;
+  height: 28px;
+  font-size: 0.8em;
+  padding: 2px 8px;
+  font-family: var(--font-monospace);
+}
+
+.tli-css-hint {
+  display: flex;
+  align-items: center;
+  height: 22px;
+  margin-right: -68px;
+  font-size: 0.74em;
+  color: var(--text-muted);
+  font-family: var(--font-monospace);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Icon Input Column */
+.tli-icon-col {
+  grid-area: icon;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.tli-icon-col input[type="text"] {
+  width: 100%;
+  height: 30px;
+  font-size: 0.8em;
+  font-family: var(--font-monospace);
+}
+
+/* Size Column: label row stacked above the slider — label "SIZE" + value on
+   one line, slider below, whole unit centered in the card. */
+.tli-size-col {
+  grid-area: size;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  /* Gap between the SIZE label row and the slider. 6px = tidy but airy. */
+  gap: 6px;
+  min-width: 0;
+}
+
+.tli-size-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4px;
+}
+
+.tli-size-label {
+  font-size: 0.8em;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.tli-size-value {
+  font-size: 0.78em;
+  color: var(--text-muted);
+  font-family: var(--font-monospace);
+  white-space: nowrap;
+}
+
+.tli-scale-slider {
+  /* Shrink the "bubble" by remapping core's thumb vars instead of restyling
+     the pseudo-element — the theme's background/border/shadow still apply.
+     18px (core default) felt too big; 14px is a little smaller. */
+  --slider-thumb-width: 14px;
+  --slider-thumb-height: 14px;
+  /* Core centers the 18px thumb with --slider-thumb-y: -6px. A 14px thumb
+     needs 2px more lift to keep its center on the track (14-18)/2 = -2px. */
+  --slider-thumb-y: -4px;
+  width: 100%;
+  height: 24px;
+  margin: 0;
+  accent-color: var(--interactive-accent);
+}
+
+/* Color Picker Column */
+.tli-color-col {
+  grid-area: color;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.tli-color-col input[type="color"] {
+  width: 18px;
+  height: 18px;
+  padding: 0;
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 50%;
+  cursor: pointer;
+  background: transparent;
+}
+
+/* Clip the inner swatch to the same circle so the fill is round too. */
+.tli-color-col input[type="color"]::-webkit-color-swatch {
+  border: none;
+  border-radius: 50%;
+}
+
+.tli-color-col input[type="color"]::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+
+/* Actions Column */
+.tli-actions-col {
+  grid-area: actions;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 6px;
+}
+
+.tli-actions-col input[type="checkbox"] {
+  margin: 0 !important;
+}
+
+.tli-actions-col .clickable-icon {
+  margin: 0;
+  height: 28px;
+  width: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tli-rule-card.is-css-mode .tli-actions-col {
+  align-self: start;
+  height: 28px;
+  margin-top: 2px;
+}
+
+/* Icon Picker Modal */
+.tli-icon-modal-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+  gap: 8px;
+  max-height: 420px;
+  overflow-y: auto;
+  padding: 8px 4px;
+  margin-top: 10px;
+}
+
+.tli-icon-modal-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 10px 6px;
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 6px;
+  background: var(--background-secondary);
+  cursor: pointer;
+  transition: all 0.12s ease;
+  text-align: center;
+}
+
+.tli-icon-modal-item:hover {
+  background: var(--background-modifier-hover);
+  border-color: var(--interactive-accent);
+  transform: translateY(-1px);
+}
+
+.tli-icon-modal-item svg {
+  width: 20px;
+  height: 20px;
+}
+
+.tli-icon-modal-name {
+  font-size: 0.75em;
+  color: var(--text-muted);
+  word-break: break-all;
+  line-height: 1.1;
+}
+
+
+/* =========================================================
+   Checkbox Status Icons (migrated from snippets/task-icons.css)
+   Gated on :where(body.tli-status-icons) (Settings > Tasks Lucide Icons >
+   Checkbox Status Icons). Each status color reads
+   --tli-status-<key> (set by the plugin's color pickers) and falls
+   back to the original theme color when no override is set.
+   :where() adds zero specificity, so these rules weigh exactly what
+   they did as a snippet and cssclass overrides (e.g. the .tasklist
+   checkboxes in compact-tasks.css) keep winning. Don't remove it.
+   ========================================================= */
+
+/* --- Settings status preview chip ---
+   The glyph a status turns in to, drawn from the same
+   --t-task-color / --t-task-mask vars as the real checkboxes
+   (symbol rules below also match .tli-status-preview[data-task=...]).
+   Deliberately borderless: inside the card badge it reads as the
+   raw colored glyph, same as the replacement cards above. */
+.tli-status-preview {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.tli-status-preview::after {
+  content: "" !important;
+  position: absolute !important;
+  top: 50% !important;
+  left: 50% !important;
+  width: var(--t-task-size, 88%) !important;
+  height: var(--t-task-size, 88%) !important;
+  transform: translate(-50%, -50%) !important;
+  pointer-events: none !important;
+  -webkit-mask: var(--t-task-mask) center / 100% no-repeat;
+  background-color: var(--t-task-color, var(--text-muted));
+}
+
+/* Card variant for status rows: same chrome/padding/badge box as the
+   replacement rule cards, with just badge | pattern | color | actions.
+   The extra columns from the rule grid (icon, size) don't exist here.
+   Sized for two cards per row, so the pattern column is tighter. */
+.tli-rule-card.is-status-mode {
+  grid-template-columns: 32px minmax(95px, 1fr) auto auto;
+  grid-template-areas: "badge pattern color actions";
+  gap: 8px;
+  padding: 8px 10px;
+}
+
+.tli-status-mode .tli-core-title,
+.tli-rule-card.is-status-mode .tli-core-title {
+  flex-wrap: wrap;
+}
+
+/* Second line under the status label ("Theme color (--color-*)"). */
+.tli-core-sub {
+  color: var(--text-muted);
+  font-size: 0.8em;
+  margin-top: 2px;
+}
+
+/* Disabled reset button (nothing custom to reset yet). */
+.tli-actions-col .clickable-icon:disabled {
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+/* --- Collapsible settings sections ---
+   Each top-level group is a <details> card: summary row on top
+   (chevron + title + header actions), body below. Open state is
+   kept in plugin.sectionCollapsed so display() re-renders don't
+   reset a fold while the user is working. */
+/* Uniform 16px gap between every section card — sections are siblings
+   in a vertical stack, so they all get the same breathing room. */
+.tli-collapse {
+  margin-top: 16px;
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 8px;
+  background: var(--background-secondary);
+  overflow: hidden;
+}
+
+.tli-collapse-summary {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 12px;
+  cursor: pointer;
+  user-select: none;
+  list-style: none;
+  transition: background-color 0.12s ease;
+}
+
+.tli-collapse-summary::-webkit-details-marker {
+  display: none;
+}
+
+.tli-collapse-summary:hover {
+  background: var(--background-modifier-hover);
+}
+
+.tli-collapse-chevron {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+  transition: transform 0.15s ease;
+  flex-shrink: 0;
+}
+
+.tli-collapse-chevron svg {
+  width: 14px;
+  height: 14px;
+}
+
+.tli-collapse[open] .tli-collapse-chevron {
+  transform: rotate(90deg);
+}
+
+.tli-collapse-title {
+  flex: 1;
+  min-width: 0;
+  font-weight: 600;
+  font-size: 1.05em;
+}
+
+.tli-collapse-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.tli-collapse-body {
+  padding: 0 12px 12px;
+}
+
+/* Footer row at the bottom of a foldable section: the add button sits
+   after the rule list so the reading order is rules, then "add one". */
+.tli-section-footer {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px;
+}
+
+.tli-section-footer .mod-cta {
+  white-space: nowrap;
+}
+
+/* Status color rows: two cards per row so the section doesn't stretch
+   forever in the settings pane. */
+.tli-status-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+@media (max-width: 720px) {
+  .tli-status-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ==========================================================
+   TASK ICONS — recolored status symbols for checkboxes
+   Renders each task status marker as a crisp icon inside a
+   rounded square. Icon = SVG glyph applied as -webkit-mask,
+   colored with background-color, so colors follow the active
+   theme/scheme (--color-* palette). Works in Live Preview
+   (HyperMD-task-line) and Reading view (task-list-item).
+   Kept: core empty-square checkbox; only symbols get glyphs.
+   ========================================================== */
+
+/* Base checkbox: bare icon surface — no box. Symbol glyphs paint
+   via ::after. Plain "(space)" tasks keep a square below. */
+:where(body.tli-status-icons) :is(.markdown-rendered .task-list-item, .cm-s-obsidian .HyperMD-task-line) .task-list-item-checkbox {
+    -webkit-appearance: none !important;
+    appearance: none !important;
+    position: relative !important;
+    border: none !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+/* Plain [ ] tasks retain a clickable square (matches Border) */
+:where(body.tli-status-icons) :is(.markdown-rendered .task-list-item[data-task=" "] .task-list-item-checkbox,
+    .cm-s-obsidian .HyperMD-task-line[data-task=" "] .task-list-item-checkbox,
+    .task-list-item-checkbox[data-task=" "], .task-list-item-checkbox[data-task=""]) {
+    border: 1.5px solid var(--checkbox-border-color, var(--background-modifier-border)) !important;
+    border-radius: var(--checkbox-radius, 4px) !important;
+    box-sizing: border-box !important;
+}
+
+/* The glyph layer — centered on the checkbox's true center, sized
+   by --t-task-size (tune bigger/smaller here, default 88%) */
+:where(body.tli-status-icons) :is(.markdown-rendered .task-list-item, .cm-s-obsidian .HyperMD-task-line) .task-list-item-checkbox::after {
+    content: "" !important;
+    position: absolute !important;
+    top: 50% !important;
+    left: 50% !important;
+    width: var(--t-task-size, 88%) !important;
+    height: var(--t-task-size, 88%) !important;
+    transform: translate(-50%, -50%) !important;
+    pointer-events: none !important;
+    -webkit-mask: var(--t-task-mask) center / 100% no-repeat;
+    background-color: var(--t-task-color);
+}
+
+/* ----------------------------------------------------------
+   Symbol table. Bindings set the mask + color on the task
+   element; the glyph IS the status.
+   x    checked          green check
+   >    moved           blue arrow-right
+   <    back            cyan arrow-left
+   /    in progress     yellow clock
+   -    cancelled       red slash
+   !    important       orange alert
+   ?    question        purple mark
+   *    star            gold star (filled)
+   "    quote           muted quotes
+   b    bookmark        blue bookmark
+   i / I info           cyan info
+   p    pin             red map-pin
+   l    location        blue map-pin (alt)
+   u    up              accent arrow-up
+   d    down            purple arrow-down
+   n    note            muted note
+   c    done-someday    faint check
+   S    savings         gold star (alt)
+   \    someday         faint slash
+   ---------------------------------------------------------- */
+
+:where(body.tli-status-icons) :is(.tli-status-preview[data-task="x"], .markdown-rendered .task-list-item[data-task="x"], .cm-s-obsidian .HyperMD-task-line[data-task="x"], :is(.markdown-rendered .task-list-item[data-task="X"], .cm-s-obsidian .HyperMD-task-line[data-task="X"])) {
+    --t-task-color: var(--tli-status-done, var(--color-green));
+    --t-task-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E");
+}
+:where(body.tli-status-icons) :is(.tli-status-preview[data-task=">"], .markdown-rendered .task-list-item[data-task=">"], .cm-s-obsidian .HyperMD-task-line[data-task=">"]) {
+    --t-task-color: var(--tli-status-forwarded, var(--color-blue));
+    --t-task-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12h14'/%3E%3Cpath d='m12 5 7 7-7 7'/%3E%3C/svg%3E");
+}
+:where(body.tli-status-icons) :is(.tli-status-preview[data-task="<"], .markdown-rendered .task-list-item[data-task="<"], .cm-s-obsidian .HyperMD-task-line[data-task="<"]) {
+    --t-task-color: var(--tli-status-scheduled, var(--color-cyan));
+    --t-task-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M19 12H5'/%3E%3Cpath d='m12 19-7-7 7-7'/%3E%3C/svg%3E");
+}
+:where(body.tli-status-icons) :is(.tli-status-preview[data-task="/"], .markdown-rendered .task-list-item[data-task="/"], .cm-s-obsidian .HyperMD-task-line[data-task="/"]) {
+    --t-task-color: var(--tli-status-in-progress, var(--color-yellow));
+    --t-task-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='9.5'/%3E%3Cpath d='M12 7v5l3.5 2'/%3E%3C/svg%3E");
+}
+:where(body.tli-status-icons) :is(.tli-status-preview[data-task="-"], .markdown-rendered .task-list-item[data-task="-"], .cm-s-obsidian .HyperMD-task-line[data-task="-"]) {
+    --t-task-color: var(--tli-status-cancelled, var(--color-red));
+    --t-task-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.5' stroke-linecap='round'%3E%3Ccircle cx='12' cy='12' r='9.5'/%3E%3Cpath d='m6.5 6.5 11 11'/%3E%3C/svg%3E");
+}
+:where(body.tli-status-icons) :is(.tli-status-preview[data-task="!"], .markdown-rendered .task-list-item[data-task="!"], .cm-s-obsidian .HyperMD-task-line[data-task="!"]) {
+    --t-task-color: var(--tli-status-important, var(--color-orange));
+    --t-task-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='9.5'/%3E%3Cpath d='M12 8v4'/%3E%3Cpath d='M12 16h.01'/%3E%3C/svg%3E");
+}
+:where(body.tli-status-icons) :is(.tli-status-preview[data-task="?"], .markdown-rendered .task-list-item[data-task="?"], .cm-s-obsidian .HyperMD-task-line[data-task="?"]) {
+    --t-task-color: var(--tli-status-question, var(--color-purple));
+    --t-task-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='9.5'/%3E%3Cpath d='M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3'/%3E%3Cpath d='M12 17h.01'/%3E%3C/svg%3E");
+}
+:where(body.tli-status-icons) :is(.tli-status-preview[data-task="*"], .markdown-rendered .task-list-item[data-task="*"], .cm-s-obsidian .HyperMD-task-line[data-task="*"]) {
+    --t-task-color: var(--tli-status-star, var(--color-yellow));
+    --t-task-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='black' d='M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z'/%3E%3C/svg%3E");
+}
+:where(body.tli-status-icons) :is(.tli-status-preview[data-task="“"], .markdown-rendered .task-list-item[data-task="“"], .cm-s-obsidian .HyperMD-task-line[data-task="“"]) {
+    --t-task-color: var(--tli-status-quote, var(--text-muted));
+    --t-task-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z'/%3E%3Cpath d='M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2h.75c0 2.25.25 4-2.75 3.5V20c0 1 0 1 1 1z'/%3E%3C/svg%3E");
+}
+/* ASCII double-quote variant — what you actually type as ["] */
+:where(body.tli-status-icons) :is(.tli-status-preview[data-task='"'], .markdown-rendered .task-list-item[data-task='"'], .cm-s-obsidian .HyperMD-task-line[data-task='"']) {
+    --t-task-color: var(--tli-status-quote, var(--text-muted));
+    --t-task-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z'/%3E%3Cpath d='M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2h.75c0 2.25.25 4-2.75 3.5V20c0 1 0 1 1 1z'/%3E%3C/svg%3E");
+}
+:where(body.tli-status-icons) :is(.tli-status-preview[data-task="b"], .markdown-rendered .task-list-item[data-task="b"], .cm-s-obsidian .HyperMD-task-line[data-task="b"]) {
+    --t-task-color: var(--tli-status-bookmark, var(--color-blue));
+    --t-task-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M17 3a2 2 0 0 1 2 2v16l-7-4-7 4V5a2 2 0 0 1 2-2z'/%3E%3C/svg%3E");
+}
+:where(body.tli-status-icons) :is(.tli-status-preview[data-task="i"], .markdown-rendered .task-list-item[data-task="i"], .cm-s-obsidian .HyperMD-task-line[data-task="i"], :is(.markdown-rendered .task-list-item[data-task="I"], .cm-s-obsidian .HyperMD-task-line[data-task="I"])) {
+    --t-task-color: var(--tli-status-info, var(--color-cyan));
+    --t-task-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='9.5'/%3E%3Cpath d='M12 16v-4'/%3E%3Cpath d='M12 8h.01'/%3E%3C/svg%3E");
+}
+:where(body.tli-status-icons) :is(.tli-status-preview[data-task="p"], .markdown-rendered .task-list-item[data-task="p"], .cm-s-obsidian .HyperMD-task-line[data-task="p"], :is(.markdown-rendered .task-list-item[data-task="l"], .cm-s-obsidian .HyperMD-task-line[data-task="l"])) {
+    --t-task-color: var(--tli-status-pin, var(--color-red));
+    --t-task-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z'/%3E%3Ccircle cx='12' cy='10' r='3'/%3E%3C/svg%3E");
+}
+:where(body.tli-status-icons) :is(.tli-status-preview[data-task="l"], .markdown-rendered .task-list-item[data-task="l"], .cm-s-obsidian .HyperMD-task-line[data-task="l"]) {
+    --t-task-color: var(--tli-status-location, var(--color-blue));
+    --t-task-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z'/%3E%3Ccircle cx='12' cy='10' r='3'/%3E%3C/svg%3E");
+}
+:where(body.tli-status-icons) :is(.tli-status-preview[data-task="u"], .markdown-rendered .task-list-item[data-task="u"], .cm-s-obsidian .HyperMD-task-line[data-task="u"]) {
+    --t-task-color: var(--tli-status-up, var(--interactive-accent));
+    --t-task-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 19V5'/%3E%3Cpath d='m5 12 7-7 7 7'/%3E%3C/svg%3E");
+}
+:where(body.tli-status-icons) :is(.tli-status-preview[data-task="d"], .markdown-rendered .task-list-item[data-task="d"], .cm-s-obsidian .HyperMD-task-line[data-task="d"]) {
+    --t-task-color: var(--tli-status-down, var(--color-purple));
+    --t-task-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 5v14'/%3E%3Cpath d='m19 12-7 7-7-7'/%3E%3C/svg%3E");
+}
+:where(body.tli-status-icons) :is(.tli-status-preview[data-task="n"], .markdown-rendered .task-list-item[data-task="n"], .cm-s-obsidian .HyperMD-task-line[data-task="n"]) {
+    --t-task-color: var(--tli-status-note, var(--text-muted));
+    --t-task-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z'/%3E%3Cpath d='M14 2v6h6'/%3E%3Cpath d='M16 13H8'/%3E%3Cpath d='M16 17H8'/%3E%3C/svg%3E");
+}
+:where(body.tli-status-icons) :is(.tli-status-preview[data-task="c"], .markdown-rendered .task-list-item[data-task="c"], .cm-s-obsidian .HyperMD-task-line[data-task="c"]) {
+    --t-task-color: var(--tli-status-someday-done, var(--text-faint));
+    --t-task-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E");
+}
+:where(body.tli-status-icons) :is(.tli-status-preview[data-task="S"], .markdown-rendered .task-list-item[data-task="S"], .cm-s-obsidian .HyperMD-task-line[data-task="S"]) {
+    --t-task-color: var(--tli-status-savings, var(--color-yellow));
+    --t-task-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='black' d='M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z'/%3E%3C/svg%3E");
+}
+:where(body.tli-status-icons) :is(.tli-status-preview[data-task="\\"], .markdown-rendered .task-list-item[data-task="\\"], .cm-s-obsidian .HyperMD-task-line[data-task="\\"]) {
+    --t-task-color: var(--tli-status-someday, var(--text-faint));
+    --t-task-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.5' stroke-linecap='round'%3E%3Cpath d='m6.5 6.5 11 11'/%3E%3C/svg%3E");
+}
+
+
+/* =========================================================
+   Mute completed tasks (migrated from snippets/completed-tasks-gray.css)
+   Gated on body.tli-mute-completed.
+   ========================================================= */
+/* Mute completed tasks (including their emoji and task icons). */
+:where(body.tli-mute-completed) :is(
+    .markdown-rendered .task-list-item[data-task="x"],
+    .markdown-rendered .task-list-item[data-task="X"],
+    .cm-s-obsidian .HyperMD-task-line[data-task="x"],
+    .cm-s-obsidian .HyperMD-task-line[data-task="X"]
+) {
+    color: var(--text-muted) !important;
+    filter: grayscale(1);
+    opacity: 0.65;
+    --t-task-color: var(--text-muted);
+}
+
